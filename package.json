@@ -1,0 +1,11 @@
+{
+  "name": "node-portfolio",
+  "version": "1.0.0",
+  "description": "A Node.js implementation for my portfolio site.",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"No tests found.\""
+  },
+  "author": "Brian Sandon",
+  "license": "ISC"
+}
