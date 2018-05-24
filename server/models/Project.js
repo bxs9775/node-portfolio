@@ -130,7 +130,7 @@ ProjectSchema.statics.findProjects = (featured, filters, callback) => {
   return ProjectModel.find(search).select(select).exec(callback);
 };
 
-ProjectSchema.statics.findProjectByShortName = (name, callback) => {
+ProjectSchema.statics.findByName = (name, callback) => {
   const search = { 'name.short': name };
 
   return ProjectModel.findOne(search).exec(callback);
