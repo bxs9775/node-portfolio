@@ -17,28 +17,56 @@
   
   <div id="mainContent">
   	<div class="wideSection tall">
-  		<img src="/assets/HvZBig.png" alt="A screen-shot from the project." title=""/>
-  		
-  		<h2><a href="HvZ.html">Humans vs. Zombies Simulation</a></h2>
-  		<p><b>Time:</b> Oct. 2015</p>
-  		<p><b>Languages:</b> Processing/Java</p>
-  		<p><b>Libraries/Packages:</b> Processing</p>
-  		<p><b>Software:</b> Processing</p>
-  		<p><b>Teammates:</b> Individual project</p>
-  		<p><b>Links:</b></p>
-  		<ul>
-  			<li><a href="https://github.com/bxs9775/Humans-vs-Zombies">View code</a></li>
-  		</ul>
-  		
-  		<p><b>Description:</b></p>
-  		
-                <p>The Human vs. Zombies simulation was an assignment I made for my Interactive Media and Development class.</p>
-                
-                <p>The assignment is inspired by the tag/NERF game Humans vs. Zombies that is popular across college campuses across the United States. The simulation features zombies chasing humans through a wooded park with all participants avoiding trees in the progress. When a human is caught by a zombie it becomes a zombie as well.</p>
-                
-                <p>The game implements programming concepts such as autonomous agents and steering behavior (namely pursue,evade, obstacle avoid, and a modified stay in bounds behavior), collision detection, and enum-based state switching. The debug mode and options mode demonstrate a basic UI structure that helps the user understand and alter the simulation.</p>
-  		
-  		</div>
+      <img src="/assets/img/{{project.images.big}}" alt="A screen-shot from the project." title=""/>
+      <h2><a href="{{project.name.short}}">{{project.name.full}}</a></h2>
+      <p><b>Time:</b> {{project.startDate.month}}. {{project.startDate.year}}-{{project.endDate.month}}. {{project.endDate.year}} </p>
+      <p>
+        <b>Languages:</b>
+        {{#if project.languages}}
+        {{#each project.languages}}
+        {{this}} {{#unless @last}}, {{/unless}}  
+        {{/each}}
+        {{else}}
+        N/A
+        {{/if}}
+      </p>
+      <p>
+        <b>Other Skills:</b>
+        {{#if project.skills}}
+        {{#each project.skills}}
+        {{this}} {{#unless @last}}, {{/unless}} 
+        {{/each}}
+        {{else}}
+        None.
+        {{/if}}
+      </p>
+      <p>
+        <b>Teammates:</b>
+        {{#if project.teammates}}
+        {{#each project.teammates}}
+        {{this}} {{#unless @last}}, {{/unless}}  
+        {{/each}}
+        {{else}}
+        Individual project
+        {{/if}}
+      </p>
+      <p><b>Links:</b></p>
+      {{#if project.links}}
+      <ul>
+        {{#each project.links}}
+        <li><a href={{this.url}}>{{this.text}}</a></li>
+        {{/each}}
+      </ul>
+      {{else}}
+      No links available.
+      {{/if}}
+      <p><b>Description:</b></p>
+      {{#if project.description}}
+      {{project.description}}
+      {{else}}
+      No description available.
+      {{/if}}
+    </div>
   </div>
   
   {{> footer}}

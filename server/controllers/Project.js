@@ -20,6 +20,7 @@ const getProject = (request, response) => {
       const document = `the project "${name}"`;
       return res.render('notFound', { doc: document });
     }
+    console.dir(docs);
     return res.render('project', { project: docs });
   });
 
