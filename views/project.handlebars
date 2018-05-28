@@ -24,7 +24,7 @@
         <b>Languages:</b>
         {{#if project.languages}}
         {{#each project.languages}}
-        {{this}} {{#unless @last}}, {{/unless}}  
+        {{~{this}~}} {{#unless @last}},{{/unless}}  
         {{/each}}
         {{else}}
         N/A
@@ -34,7 +34,7 @@
         <b>Other Skills:</b>
         {{#if project.skills}}
         {{#each project.skills}}
-        {{this}} {{#unless @last}}, {{/unless}} 
+        {{~{this}~}} {{#unless @last}},{{/unless}} 
         {{/each}}
         {{else}}
         None.
@@ -44,7 +44,7 @@
         <b>Teammates:</b>
         {{#if project.teammates}}
         {{#each project.teammates}}
-        {{this}} {{#unless @last}}, {{/unless}}  
+        {{~{this}~}} {{#unless @last}},{{/unless}}  
         {{/each}}
         {{else}}
         Individual project
@@ -54,7 +54,7 @@
       {{#if project.links}}
       <ul>
         {{#each project.links}}
-        <li><a href={{this.url}}>{{this.text}}</a></li>
+        <li><a href={{{this.url}}}>{{{this.text}}}</a></li>
         {{/each}}
       </ul>
       {{else}}
@@ -62,7 +62,9 @@
       {{/if}}
       <p><b>Description:</b></p>
       {{#if project.description}}
-      {{project.description}}
+      {{#each project.description}}
+      <p>{{{this}}}</p>
+      {{/each}}
       {{else}}
       No description available.
       {{/if}}
