@@ -28,10 +28,21 @@ const getProject = (request, response) => {
 };
 
 const getList = (req, res) => {
-  /*
-  Add more here later...
-  */
-  res.status(501).json({ error: 'This functionality has not yet been added.' });
+  const featured = req.body.featured || null;
+  const filters = {};
+
+  return Project.ProjectModel.findProjects(featured, filters, (err, docs) => {
+    if (err) {
+      console.log(err);
+
+      return res.status(400).json({ error: 'An error occured.' });
+    }
+    if (!docs) {
+      return res.status(200).json({ error: 'No projects found with the selected criteria.' });
+    }
+
+    return res.status(200).json({ projects: docs });
+  });
 };
 
 module.exports = {

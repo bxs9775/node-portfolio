@@ -130,7 +130,7 @@ const ProjectSchema = new mongoose.Schema({
 });
 
 ProjectSchema.statics.findProjects = (featured, filters, callback) => {
-  const select = 'name startDate endDate languages skills teammates';
+  const select = 'images name startDate endDate languages skills teammates';
 
   const searchArr = [];
   if (featured) {
