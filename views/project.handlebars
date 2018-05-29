@@ -17,7 +17,8 @@
   
   <div id="mainContent">
   	<div class="wideSection tall">
-      <img src="/assets/img/{{project.images.big}}" alt="A screen-shot from the project." title=""/>
+      <img id="fullImage" src="/assets/img/{{project.images.big}}" alt="A screen-shot from the project." title=""/>
+      <img id="thumbnail" src="/assets/img/{{project.images.small}}" alt="A screen-shot from the project." title=""/>
       <h2><a href="{{project.name.short}}">{{project.name.full}}</a></h2>
       <p><b>Time:</b> {{project.startDate.month}}. {{project.startDate.year}}-{{project.endDate.month}}. {{project.endDate.year}} </p>
       <p>
@@ -72,5 +73,7 @@
   </div>
   
   {{> footer}}
+  
+  <script src="/assets/page.js"></script>
 </body>
 </html>

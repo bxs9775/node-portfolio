@@ -88,6 +88,14 @@ header img{
 	background-color:#fff;
 }
 
+#navbar a:link,#navbar a:visited{
+  background-color: #fff;
+}
+
+#navbar a:hover{
+  background-color: #a9a9ba;
+}
+
 #navbar>*{
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -108,6 +116,10 @@ header img{
 	
 	
 	box-shadow: 3px 3px 5px #999;
+}
+
+#thumbnail{
+  display: none;
 }
 
 

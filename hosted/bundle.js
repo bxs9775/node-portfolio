@@ -20,11 +20,59 @@ var getFeatured = function getFeatured() {
   return getProjects('?featured=true', null);
 };
 
+//Events
+var goToProject = function goToProject(proj) {
+  var loc = window.location;
+  var newURL = loc.protocol + '//' + loc.host + '/project/' + proj.name.short;
+  console.log(newURL);
+  window.location.href = newURL;
+  console.dir(window);
+  console.dir(window.location);
+
+  return false;
+};
+
+//Changes the style of a project as it is hovered over.
+var onProjectHover = function onProjectHover(projId) {
+  var project = document.querySelector('#' + projId);
+
+  if (project) {
+    project.style.boxShadow = "2px 2px 5px #aaa";
+    project.style.backgroundColor = "#e0e0ef";
+
+    var projImg = project.querySelector(".mainImage");
+    var projDetails = project.querySelector(".details");
+    if (projImg && projDetails) {
+      projImg.style.width = projImg.naturalWidth + "px";
+      projImg.style.height = "0px";
+      projDetails.style.height = "200px";
+    }
+  }
+};
+
+//Restores the style of the project to its default.
+var onProjectOut = function onProjectOut(projId) {
+  var project = document.querySelector('#' + projId);
+
+  if (project) {
+    project.style.boxShadow = "3px 3px 5px #999";
+    project.style.backgroundColor = "#f0f0f0";
+
+    var projImg = project.querySelector(".mainImage");
+    var projDetails = project.querySelector(".details");
+    if (projImg && projDetails) {
+      projImg.style.width = projImg.naturalWidth + "px";
+      projImg.style.height = "200px";
+      projDetails.style.height = "0px";
+    }
+  }
+};
+
 //React
 var Project = function Project(props) {
   var project = props.project;
   var genList = function genList(label, arr, emptyMsg) {
-    if (!arr) {
+    if (!arr || arr.length == 0) {
       return React.createElement(
         'p',
         null,
@@ -56,25 +104,8 @@ var Project = function Project(props) {
     );
   };
 
-  //events
-  var goToProject = function goToProject() {
-    var loc = window.location;
-    var newURL = loc.protocol + '//' + loc.host + '/project/' + project.name.short;
-    console.log(newURL);
-    //window.location.assign(newURL);
-    window.location.href = newURL;
-    console.dir(window);
-    console.dir(window.location);
-
-    return false;
-  };
-  /*
-  const goToProject = () => {
-    const newURL = `/project/${project.name.short}`;
-    sendAjax('GET',newURL,null,function(){});
-  };
-  */
   //content
+  var projId = 'proj-' + project.name.short;
   var style = { cursor: 'pointer' };
   var img = '/assets/img/' + project.images.small;
   var languages = genList('Languages', project.languages, 'N/A');
@@ -82,9 +113,19 @@ var Project = function Project(props) {
   details.push(genList('Skills', project.skills, "None"));
   details.push(genList('Teammates', project.teammates, "Individual Project"));
 
+  var onClick = function onClick() {
+    return goToProject(project);
+  };
+  var onHover = function onHover() {
+    return onProjectHover(projId);
+  };
+  var onOut = function onOut() {
+    return onProjectOut(projId);
+  };
+
   return React.createElement(
     'div',
-    { className: 'project', style: style, onClick: goToProject },
+    { id: projId, className: 'project', style: style, onClick: onClick, onMouseOver: onHover, onMouseOut: onOut },
     React.createElement('img', { className: 'mainImage', src: img, alt: 'A screen-shot from the project.', title: '' }),
     React.createElement(
       'h2',
@@ -113,7 +154,7 @@ var Project = function Project(props) {
     languages,
     React.createElement(
       'div',
-      { 'class': 'details' },
+      { className: 'details' },
       details
     )
   );
