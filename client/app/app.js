@@ -1,4 +1,5 @@
 // Method stubs
+let FilterForm = {};
 let Projects = {};
 
 //AJAX
@@ -8,11 +9,19 @@ const getProjects = (data,e) => {
   }
   sendAjax('GET','/projects',data,function(result){
     console.dir(result);
-    const content = document.querySelector('#mainContent');
-    ReactDOM.render(<Projects projects={result.projects} />,content);
+    const elem = document.querySelector('#projectList');
+    ReactDOM.render(<Projects projects={result.projects} />,elem);
   });
   return false;
 };
+
+const getFilters = () => {
+  return sendAjax('GET','/filters',null,function(result){
+    console.dir(result);
+    const elem = document.querySelector('#filters');
+    ReactDOM.render(<FilterForm languages={result.languages} skills={result.skills} />,elem);
+  });
+}
 
 const getFeatured = () => getProjects('?featured=true',null);
 
@@ -65,6 +74,32 @@ const onProjectOut = function(projId){
 };
 
 //React
+FilterForm = (props) => {
+  const langs = props.languages.map((lang) => {
+    return (<p><input type="checkbox" name="languages" value={lang} checked={true}/>{lang}</p>);
+  });
+  const skills = props.skills.map((skill) => {
+    return (<p><input type="checkbox" name="skills" value={skill} checked={true}/>{skill}</p>);
+  });
+  
+  const submit = (e) => getProjects($("#filtersForm").serialize(),e);
+  
+  return (
+    <form id="filtersForm" name="filtersForm"
+      onSubmit={submit}
+      action='/projects'
+      method='GET'
+      >
+      <p><input type="checkbox" name="featured" value="true" checked={true}/>Only featured projects</p>
+      <label htmlFor="languages">Languages:</label>
+      {langs}
+      <label htmlFor="skills">Other Skills:</label>
+      {skills}
+      <input type="submit" value="Filter" />
+    </form>
+  );
+}
+
 const Project = (props) => {
   const project = props.project;
   const genList = (label,arr,emptyMsg) => {
@@ -90,7 +125,7 @@ const Project = (props) => {
   const onOut = () => onProjectOut(projId);
   
   return (
-    <div id={projId} className="project" style={style} onClick={onClick} onMouseOver={onHover} onMouseOut={onOut}>
+    <div id={projId} className="project contentItem" style={style} onClick={onClick} onMouseOver={onHover} onMouseOut={onOut}>
       <img className="mainImage" src={img} alt="A screen-shot from the project." title="" />
       <h2><a href="Latin_Square_Solver.html">Latin Square Solver</a><span class="plainTitle">Latin Square Solver</span></h2>
       <p><b>Time:</b> Feb 2017-Mar 2017</p>
@@ -114,6 +149,7 @@ Projects = (props) => {
 //Setup
 const setup = function(){
   getFeatured();
+  getFilters();
 };
       
 window.onload = setup;

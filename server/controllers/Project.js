@@ -45,7 +45,21 @@ const getList = (req, res) => {
   });
 };
 
+const getFilters = (req, res) => {
+  const success = (result) => {
+    console.dir(result);
+    const [languages, skills] = result;
+    return res.status(200).json({ languages, skills });
+  };
+  const error = (err) => {
+    console.dir(err);
+    return res.status(400).json({ error: 'An error occured.' });
+  };
+  return Project.ProjectModel.getFilterValues(success, error);
+};
+
 module.exports = {
   getProject,
   getList,
+  getFilters,
 };

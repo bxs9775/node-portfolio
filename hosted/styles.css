@@ -108,7 +108,7 @@ header img{
 }
 
 /*Other class id styling*/
-.project,.wideSection{
+.contentItem{
 	background-color:#f0f0f0;
 	padding: 6px;
 	
@@ -118,12 +118,23 @@ header img{
 	box-shadow: 3px 3px 5px #999;
 }
 
+#leftPanel{
+  width: 79%;
+  float: left;
+}
+
+#sidebar{
+  width: 19%;
+  height: 100%;
+  float: right;
+}
+
 #thumbnail{
   display: none;
 }
 
 
-.wideSection img{
+.fullProject img{
 	float: right;
 }
 

@@ -1,6 +1,7 @@
 'use strict';
 
 // Method stubs
+var FilterForm = {};
 var Projects = {};
 
 //AJAX
@@ -10,10 +11,18 @@ var getProjects = function getProjects(data, e) {
   }
   sendAjax('GET', '/projects', data, function (result) {
     console.dir(result);
-    var content = document.querySelector('#mainContent');
-    ReactDOM.render(React.createElement(Projects, { projects: result.projects }), content);
+    var elem = document.querySelector('#projectList');
+    ReactDOM.render(React.createElement(Projects, { projects: result.projects }), elem);
   });
   return false;
+};
+
+var getFilters = function getFilters() {
+  return sendAjax('GET', '/filters', null, function (result) {
+    console.dir(result);
+    var elem = document.querySelector('#filters');
+    ReactDOM.render(React.createElement(FilterForm, { languages: result.languages, skills: result.skills }), elem);
+  });
 };
 
 var getFeatured = function getFeatured() {
@@ -69,6 +78,57 @@ var onProjectOut = function onProjectOut(projId) {
 };
 
 //React
+FilterForm = function FilterForm(props) {
+  var langs = props.languages.map(function (lang) {
+    return React.createElement(
+      'p',
+      null,
+      React.createElement('input', { type: 'checkbox', name: 'languages', value: lang, checked: true }),
+      lang
+    );
+  });
+  var skills = props.skills.map(function (skill) {
+    return React.createElement(
+      'p',
+      null,
+      React.createElement('input', { type: 'checkbox', name: 'skills', value: skill, checked: true }),
+      skill
+    );
+  });
+
+  var submit = function submit(e) {
+    return getProjects($("#filtersForm").serialize(), e);
+  };
+
+  return React.createElement(
+    'form',
+    { id: 'filtersForm', name: 'filtersForm',
+      onSubmit: submit,
+      action: '/projects',
+      method: 'GET'
+    },
+    React.createElement(
+      'p',
+      null,
+      React.createElement('input', { type: 'checkbox', name: 'featured', value: 'true', checked: true }),
+      'Only featured projects'
+    ),
+    React.createElement(
+      'label',
+      { htmlFor: 'languages' },
+      'Languages:'
+    ),
+    langs,
+    React.createElement(
+      'label',
+      { htmlFor: 'skills' },
+      'Other Skills:'
+    ),
+    skills,
+    React.createElement('input', { type: 'submit', value: 'Filter' })
+  );
+};
+
 var Project = function Project(props) {
   var project = props.project;
   var genList = function genList(label, arr, emptyMsg) {
@@ -125,7 +185,7 @@ var Project = function Project(props) {
 
   return React.createElement(
     'div',
-    { id: projId, className: 'project', style: style, onClick: onClick, onMouseOver: onHover, onMouseOut: onOut },
+    { id: projId, className: 'project contentItem', style: style, onClick: onClick, onMouseOver: onHover, onMouseOut: onOut },
     React.createElement('img', { className: 'mainImage', src: img, alt: 'A screen-shot from the project.', title: '' }),
     React.createElement(
       'h2',
@@ -174,6 +234,7 @@ Projects = function Projects(props) {
 //Setup
 var setup = function setup() {
   getFeatured();
+  getFilters();
 };
 
 window.onload = setup;
