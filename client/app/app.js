@@ -117,7 +117,9 @@ const Project = (props) => {
   
   //content
   const projId = `proj-${project.name.short}`;
-  const style = {cursor: 'pointer'};
+  //const style = {cursor: 'pointer'};
+  let style = (props.style)?props.style:{};
+  style.cursor = 'pointer';
   const img = `/assets/img/${project.images.small}`;
   let languages = genList('Languages',project.languages,'N/A');
   let details = [];
@@ -146,7 +148,10 @@ const Project = (props) => {
 };
 
 Projects = (props) => {
-  const projects = props.projects.map((proj) => (<Project project={proj} />));
+  const projects = props.projects.map((proj,index) => {
+    let float = { float: ((index%2)?'right':'left')}
+    return (<Project project={proj} style={float}/>);
+  });
   return (
     <div>
       {projects}

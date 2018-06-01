@@ -170,7 +170,9 @@ var Project = function Project(props) {
 
   //content
   var projId = 'proj-' + project.name.short;
-  var style = { cursor: 'pointer' };
+  //const style = {cursor: 'pointer'};
+  var style = props.style ? props.style : {};
+  style.cursor = 'pointer';
   var img = '/assets/img/' + project.images.small;
   var languages = genList('Languages', project.languages, 'N/A');
   var details = [];
@@ -232,8 +234,9 @@ var Project = function Project(props) {
 };
 
 Projects = function Projects(props) {
-  var projects = props.projects.map(function (proj) {
-    return React.createElement(Project, { project: proj });
+  var projects = props.projects.map(function (proj, index) {
+    var float = { float: index % 2 ? 'right' : 'left' };
+    return React.createElement(Project, { project: proj, style: float });
   });
   return React.createElement(
     'div',
