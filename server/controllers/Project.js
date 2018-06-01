@@ -28,8 +28,16 @@ const getProject = (request, response) => {
 };
 
 const getList = (req, res) => {
-  const featured = req.body.featured || null;
+  const featured = req.query.featured || null;
   const filters = {};
+
+  console.dir(req.query);
+  if (req.query.languages) {
+    filters.languages = req.query.languages;
+  }
+  if (req.query.skills) {
+    filters.skills = req.query.skills;
+  }
 
   return Project.ProjectModel.findProjects(featured, filters, (err, docs) => {
     if (err) {

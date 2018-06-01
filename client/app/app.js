@@ -20,6 +20,10 @@ const getFilters = () => {
     console.dir(result);
     const elem = document.querySelector('#filters');
     ReactDOM.render(<FilterForm languages={result.languages} skills={result.skills} />,elem);
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox){
+      checkbox.checked = true;
+    });
   });
 }
 
@@ -76,10 +80,10 @@ const onProjectOut = function(projId){
 //React
 FilterForm = (props) => {
   const langs = props.languages.map((lang) => {
-    return (<p><input type="checkbox" name="languages" value={lang} checked={true}/>{lang}</p>);
+    return (<p><input type="checkbox" name="languages" value={lang}/>{lang}</p>);
   });
   const skills = props.skills.map((skill) => {
-    return (<p><input type="checkbox" name="skills" value={skill} checked={true}/>{skill}</p>);
+    return (<p><input type="checkbox" name="skills" value={skill}/>{skill}</p>);
   });
   
   const submit = (e) => getProjects($("#filtersForm").serialize(),e);
@@ -90,7 +94,7 @@ FilterForm = (props) => {
       action='/projects'
       method='GET'
       >
-      <p><input type="checkbox" name="featured" value="true" checked={true}/>Only featured projects</p>
+      <p><input type="checkbox" name="featured" value="true"/>Only featured projects</p>
       <label htmlFor="languages">Languages:</label>
       {langs}
       <label htmlFor="skills">Other Skills:</label>
@@ -117,8 +121,12 @@ const Project = (props) => {
   const img = `/assets/img/${project.images.small}`;
   let languages = genList('Languages',project.languages,'N/A');
   let details = [];
+  const {name} = project;
+  const start = project.startDate;
+  const end = project.endDate;
   details.push(genList('Skills',project.skills,"None"));
   details.push(genList('Teammates',project.teammates,"Individual Project"));
+  
   
   const onClick = () => goToProject(project);
   const onHover = () => onProjectHover(projId);
@@ -127,8 +135,8 @@ const Project = (props) => {
   return (
     <div id={projId} className="project contentItem" style={style} onClick={onClick} onMouseOver={onHover} onMouseOut={onOut}>
       <img className="mainImage" src={img} alt="A screen-shot from the project." title="" />
-      <h2><a href="Latin_Square_Solver.html">Latin Square Solver</a><span class="plainTitle">Latin Square Solver</span></h2>
-      <p><b>Time:</b> Feb 2017-Mar 2017</p>
+      <h2><a href={name.short}></a><span class="plainTitle">{name.full}</span></h2>
+      <p><b>Time:</b> {start.month} {start.year}-{end.month} {end.year}</p>
       {languages}
       <div className="details">
         {details}

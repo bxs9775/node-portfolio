@@ -22,6 +22,10 @@ var getFilters = function getFilters() {
     console.dir(result);
     var elem = document.querySelector('#filters');
     ReactDOM.render(React.createElement(FilterForm, { languages: result.languages, skills: result.skills }), elem);
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+      checkbox.checked = true;
+    });
   });
 };
 
@@ -83,7 +87,7 @@ FilterForm = function FilterForm(props) {
     return React.createElement(
       'p',
       null,
-      React.createElement('input', { type: 'checkbox', name: 'languages', value: lang, checked: true }),
+      React.createElement('input', { type: 'checkbox', name: 'languages', value: lang }),
       lang
     );
   });
@@ -91,7 +95,7 @@ FilterForm = function FilterForm(props) {
     return React.createElement(
       'p',
       null,
-      React.createElement('input', { type: 'checkbox', name: 'skills', value: skill, checked: true }),
+      React.createElement('input', { type: 'checkbox', name: 'skills', value: skill }),
       skill
     );
   });
@@ -110,7 +114,7 @@ FilterForm = function FilterForm(props) {
     React.createElement(
       'p',
       null,
-      React.createElement('input', { type: 'checkbox', name: 'featured', value: 'true', checked: true }),
+      React.createElement('input', { type: 'checkbox', name: 'featured', value: 'true' }),
       'Only featured projects'
     ),
     React.createElement(
@@ -170,6 +174,10 @@ var Project = function Project(props) {
   var img = '/assets/img/' + project.images.small;
   var languages = genList('Languages', project.languages, 'N/A');
   var details = [];
+  var name = project.name;
+
+  var start = project.startDate;
+  var end = project.endDate;
   details.push(genList('Skills', project.skills, "None"));
   details.push(genList('Teammates', project.teammates, "Individual Project"));
 
@@ -190,15 +198,11 @@ var Project = function Project(props) {
     React.createElement(
       'h2',
       null,
-      React.createElement(
-        'a',
-        { href: 'Latin_Square_Solver.html' },
-        'Latin Square Solver'
-      ),
+      React.createElement('a', { href: name.short }),
       React.createElement(
         'span',
         { 'class': 'plainTitle' },
-        'Latin Square Solver'
+        name.full
       )
     ),
     React.createElement(
@@ -209,7 +213,14 @@ var Project = function Project(props) {
         null,
         'Time:'
       ),
-      ' Feb 2017-Mar 2017'
+      ' ',
+      start.month,
+      ' ',
+      start.year,
+      '-',
+      end.month,
+      ' ',
+      end.year
     ),
     languages,
     React.createElement(
