@@ -61,6 +61,14 @@
       {{else}}
       No links available.
       {{/if}}
+      {{#if project.programmingWork}}
+      <p><b>What I worked on:</b></p>
+      <ul>
+        {{#each project.programmingWork}}
+        <li>{{{this}}}</li>
+        {{/each}}
+      </ul>
+      {{/if}}
       <p><b>Description:</b></p>
       {{#if project.description}}
       {{#each project.description}}
