@@ -128,6 +128,12 @@ FilterForm = function FilterForm(props) {
       { htmlFor: 'skills' },
       'Other Skills:'
     ),
+    React.createElement(
+      'p',
+      null,
+      React.createElement('input', { type: 'checkbox', name: 'skills', value: 'None' }),
+      'None'
+    ),
     skills,
     React.createElement('input', { type: 'submit', value: 'Filter' })
   );

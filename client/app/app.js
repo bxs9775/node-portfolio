@@ -98,6 +98,7 @@ FilterForm = (props) => {
       <label htmlFor="languages">Languages:</label>
       {langs}
       <label htmlFor="skills">Other Skills:</label>
+      <p><input type="checkbox" name="skills" value="None"/>None</p>
       {skills}
       <input type="submit" value="Filter" />
     </form>

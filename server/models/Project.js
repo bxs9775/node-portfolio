@@ -147,8 +147,36 @@ ProjectSchema.statics.findProjects = (featured, filters, callback) => {
     const filtEntries = Object.entries(filters);
     for (let i = 0; i < filtEntries.length; i++) {
       const entry = filtEntries[i];
-      const filtSearch = {};
-      filtSearch[entry[0]] = { $in: entry[1] };
+      let filtSearch = {};
+      const key = entry[0];
+      let values = entry[1];
+      let noneFilt = false;
+      const searchIn = (k, vals) => {
+        const filt = {};
+        filt[k] = { $in: vals };
+        return filt;
+      };
+      if (key === 'skills') {
+        if (values === 'None') {
+          values = [];
+          noneFilt = true;
+        } else {
+          const indexOfNone = values.indexOf('None');
+          if (indexOfNone > -1) {
+            values.splice(indexOfNone, 1);
+            noneFilt = true;
+          }
+        }
+        if (noneFilt) {
+          const filt1 = {};
+          filt1[key] = { $size: 0 };
+          const filt2 = searchIn(key, values);
+          filtSearch = { $or: [filt1, filt2] };
+        }
+      }
+      if (!noneFilt) {
+        filtSearch = searchIn(key, values);
+      }
       searchArr.push(filtSearch);
     }
   }
