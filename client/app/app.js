@@ -27,7 +27,7 @@ const getFilters = () => {
   });
 }
 
-const getFeatured = () => getProjects('?featured=true',null);
+const getFeatured = () => getProjects('featured=true',null);
 
 //Events
 const goToProject = (proj) => {

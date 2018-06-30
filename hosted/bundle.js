@@ -30,7 +30,7 @@ var getFilters = function getFilters() {
 };
 
 var getFeatured = function getFeatured() {
-  return getProjects('?featured=true', null);
+  return getProjects('featured=true', null);
 };
 
 //Events
