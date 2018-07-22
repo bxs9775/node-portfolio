@@ -8,7 +8,6 @@ const getProjects = (data,e) => {
     e.preventDefault();
   }
   sendAjax('GET','/projects',data,function(result){
-    console.dir(result);
     const elem = document.querySelector('#projectList');
     ReactDOM.render(<Projects projects={result.projects} />,elem);
   });
@@ -17,7 +16,6 @@ const getProjects = (data,e) => {
 
 const getFilters = () => {
   return sendAjax('GET','/filters',null,function(result){
-    console.dir(result);
     const elem = document.querySelector('#filters');
     ReactDOM.render(<FilterForm languages={result.languages} skills={result.skills} />,elem);
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -33,10 +31,7 @@ const getFeatured = () => getProjects('featured=true',null);
 const goToProject = (proj) => {
   const loc = window.location;
   const newURL = `${loc.protocol}//${loc.host}/project/${proj.name.short}`;
-  console.log(newURL);
   window.location.href = newURL;
-  console.dir(window);
-  console.dir(window.location);
   
   return false;
 };

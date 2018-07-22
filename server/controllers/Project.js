@@ -7,7 +7,6 @@ const getProject = (request, response) => {
   const res = response;
 
   const url = req.url.split('/');
-  console.dir(url);
   const name = url[2];
 
   return Project.ProjectModel.findByName(name, (err, docs) => {
@@ -20,7 +19,6 @@ const getProject = (request, response) => {
       const document = `the project "${name}"`;
       return res.render('notFound', { doc: document });
     }
-    console.dir(docs);
     return res.render('project', { project: docs });
   });
 
@@ -31,7 +29,6 @@ const getList = (req, res) => {
   const featured = req.query.featured || null;
   const filters = {};
 
-  console.dir(req.query);
   if (req.query.languages) {
     filters.languages = req.query.languages;
   }
@@ -55,7 +52,6 @@ const getList = (req, res) => {
 
 const getFilters = (req, res) => {
   const success = (result) => {
-    console.dir(result);
     const [languages, skills] = result;
     return res.status(200).json({ languages, skills });
   };

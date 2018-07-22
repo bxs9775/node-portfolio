@@ -10,7 +10,6 @@ var getProjects = function getProjects(data, e) {
     e.preventDefault();
   }
   sendAjax('GET', '/projects', data, function (result) {
-    console.dir(result);
     var elem = document.querySelector('#projectList');
     ReactDOM.render(React.createElement(Projects, { projects: result.projects }), elem);
   });
@@ -19,7 +18,6 @@ var getProjects = function getProjects(data, e) {
 
 var getFilters = function getFilters() {
   return sendAjax('GET', '/filters', null, function (result) {
-    console.dir(result);
     var elem = document.querySelector('#filters');
     ReactDOM.render(React.createElement(FilterForm, { languages: result.languages, skills: result.skills }), elem);
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -37,10 +35,7 @@ var getFeatured = function getFeatured() {
 var goToProject = function goToProject(proj) {
   var loc = window.location;
   var newURL = loc.protocol + '//' + loc.host + '/project/' + proj.name.short;
-  console.log(newURL);
   window.location.href = newURL;
-  console.dir(window);
-  console.dir(window.location);
 
   return false;
 };
