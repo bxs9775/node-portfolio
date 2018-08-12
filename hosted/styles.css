@@ -186,6 +186,14 @@ header img{
 	transition: height 0.8s ease-in-out;/**/
 }
 
+.note{
+  margin-top: 3%;
+  padding-top: 6pt;
+  border-top: solid grey 1px;
+  
+  font-style: italic;
+}
+
 /*Media queries*/
 @media screen and (max-width:700px){
     *{

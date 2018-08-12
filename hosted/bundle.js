@@ -181,7 +181,7 @@ var Project = function Project(props) {
 
   var start = project.startDate;
   var end = project.endDate;
-  details.push(genList('Skills', project.skills, "None"));
+  details.push(genList('Other Skills', project.skills, "None"));
   details.push(genList('Teammates', project.teammates, "Individual Project"));
 
   var onClick = function onClick() {

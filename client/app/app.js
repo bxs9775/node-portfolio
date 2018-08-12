@@ -122,7 +122,7 @@ const Project = (props) => {
   const {name} = project;
   const start = project.startDate;
   const end = project.endDate;
-  details.push(genList('Skills',project.skills,"None"));
+  details.push(genList('Other Skills',project.skills,"None"));
   details.push(genList('Teammates',project.teammates,"Individual Project"));
   
   
